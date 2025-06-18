@@ -25,8 +25,20 @@ probe_vars <- apply(betaVals_t, 2, var)
 # 4. Keep only columns (probes) with non-zero variance
 betaVals_t_filtered <- betaVals_t[, probe_vars > 0]
 
+# Here we assume metadata$basename matches column names of b_values
+metadata$basename <- basename(metadata$path)
+rownames(betaVals_t_filtered) <- metadata$sample_id[match(rownames(betaVals_t_filtered), metadata$basename)]
+
 # Run PCA
 pca <- prcomp(betaVals_t_filtered, center = TRUE, scale. = TRUE)
 
+#Add Column Names
+pca_scores <- as.data.frame(pca$x)
+pca_scores <- cbind(Sample = rownames(pca_scores), pca_scores)
+rownames(pca_scores) <- NULL  # optional: remove row names to match first column
+
+# Extract base folder from the first row of metadata$path
+base_folder <- gsub("/Donor.*/.*", "/", metadata$path[1])
+
 # Save compressed pca results
-get_compressed_result(pca$x, file.path(base_folder, "results.csv.gz"))
+get_compressed_result(pca_scores, file.path(base_folder, "results.csv.gz"))

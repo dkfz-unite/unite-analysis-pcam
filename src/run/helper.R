@@ -22,7 +22,7 @@ get_updated_metadata <- function(metadata)
 # @return A matrix of B-values obtained after preprocessing the IDAT files.
 get_b_values <- function(metadata, opts) {
     # Read IDAT files
-    RGset <- read.metharray(metadata$path, extended = TRUE)
+    RGset <- read.metharray(metadata$path, extended = TRUE, force = TRUE)
 
     preprocess_method = opts$pp
     if (preprocess_method == "preprocessSWAN") {
