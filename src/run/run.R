@@ -39,7 +39,7 @@ base_folder <- gsub("/Donor.*/.*", "/", metadata$path[1])
 
 pca_with_group <- merge(
     pca_scores,
-    metadata[, c("sample_id", "path", "conditions","age","sex")],
+    metadata[, c("sample_id", "path", "condition")],
     by.x = "Sample",
     by.y = "sample_id",
     all.x = TRUE
