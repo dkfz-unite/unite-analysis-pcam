@@ -28,14 +28,3 @@ get_b_values <- function(metadata, opts) {
     b_values <- getBeta(betaSet)
     return(b_values)
 }
-
-#' compress result
-#' This function compresses the results file into a gzipped format.
-#' @param results A data frame containing the results to be compressed.
-#' @param gzfile_path The path where the gzipped file will be saved.
-#' @return None
-get_compressed_result <- function(results, gzfile_path) {
-    gz_con <- gzfile(gzfile_path, "wt")
-    write.csv(results, gz_con, row.names = TRUE)
-    close(gz_con)
-}
