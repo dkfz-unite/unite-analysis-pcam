@@ -37,13 +37,5 @@ rownames(pca_scores) <- NULL  # optional: remove row names to match first column
 # Extract base folder from the first row of metadata$path
 base_folder <- gsub("/Donor.*/.*", "/", metadata$path[1])
 
-pca_with_group <- merge(
-    pca_scores,
-    metadata[, c("sample_id", "path", "condition")],
-    by.x = "Sample",
-    by.y = "sample_id",
-    all.x = TRUE
-)
-
 # Save compressed pca results
-get_compressed_result(pca_with_group, file.path(base_folder, "results.csv.gz"))
+write.table(pca_scores, file.path(base_folder, "results.tsv"), row.names = FALSE, quote = FALSE, sep = "\t")
