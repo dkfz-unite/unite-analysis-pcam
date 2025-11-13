@@ -1,30 +1,35 @@
 library(minfi)
-args = commandArgs(trailingOnly = T)
+args = commandArgs(trailingOnly = TRUE)
 analysis_package <- "IlluminaHumanMethylationEPICmanifest"
 library(analysis_package, character.only = TRUE)
 
 
 # Get B-values
 # @param metadata A data frame containing the meta data, including the paths to the IDAT files.
-# @param opts A list containing options for preprocessing the IDAT files. The list should include:
+# @param options A list containing options for preprocessing the IDAT files. The list should include:
 # @return A matrix of B-values obtained after preprocessing the IDAT files.
-get_b_values <- function(metadata, opts) {
+get_b_values <- function(metadata, options) {
     # Read IDAT files
-    RGset <- read.metharray(metadata$path, extended = TRUE, force = TRUE)
+    red_grn_set <- read.metharray(metadata$path, extended = TRUE, force = TRUE)
 
-    preprocess_method = opts$pp
-    if (preprocess_method == "preprocessSWAN") {
-        betaSet <- preprocessSWAN(RGset)
-    } else if (preprocess_method == "preprocessQuantile") {
-        betaSet <- preprocessQuantile(RGset)
-    } else if (preprocess_method == "preprocessNoob") {
-        betaSet <- preprocessNoob(RGset)
-    } else if (preprocess_method == "preprocessRaw") {
-        betaSet <- preprocessRaw(RGset)
+    method = options$pp
+
+    if (method == "preprocessSWAN") {
+        b_set <- preprocessSWAN(red_grn_set)
+    } else if (method == "preprocessQuantile") {
+        b_set <- preprocessQuantile(red_grn_set)
+    } else if (method == "preprocessNoob") {
+        b_set <- preprocessNoob(red_grn_set)
+    } else if (method == "preprocessRaw") {
+        b_set <- preprocessRaw(red_grn_set)
     } else {
-        betaSet <- preprocessIllumina(RGset)
+        b_set <- preprocessIllumina(red_grn_set)
     }
-    # get m_ values
-    b_values <- getBeta(betaSet)
+
+    b_values <- getBeta(b_set)
+    rm(red_grn_set)
+    rm(b_set)
+    gc()
+
     return(b_values)
 }
