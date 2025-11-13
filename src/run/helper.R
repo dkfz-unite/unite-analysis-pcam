@@ -29,7 +29,12 @@ get_b_values <- function(metadata, options) {
     b_values <- getBeta(b_set)
     rm(red_grn_set)
     rm(b_set)
-    gc()
+    clean_memory()
 
     return(b_values)
+}
+
+clean_memory <- function() {
+    gc(reset = TRUE, full = TRUE)
+    gc(reset = TRUE, full = TRUE)
 }
