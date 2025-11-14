@@ -3,7 +3,6 @@ args = commandArgs(trailingOnly = TRUE)
 analysis_package <- "IlluminaHumanMethylationEPICmanifest"
 library(analysis_package, character.only = TRUE)
 
-
 # Get B-values
 # @param metadata A data frame containing the meta data, including the paths to the IDAT files.
 # @param options A list containing options for preprocessing the IDAT files. The list should include:

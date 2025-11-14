@@ -26,7 +26,6 @@ b_values_transposed <- t(b_values_clean)
 rm(b_values_clean)
 clean_memory()
 
-# Cannot rescale a constant/zero column to unit variance
 # Calculate variance for each probe (i.e., each column)
 probe_variances <- apply(b_values_transposed, 2, var)
 
