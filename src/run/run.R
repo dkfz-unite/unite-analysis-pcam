@@ -1,13 +1,13 @@
-source("/src/common.R")
+source("common.R")
 
 steps <- list(
-  "/src/1-b-values.R",
-  "/src/2-b-values-clean.R",
-  "/src/3-b-values-transposed.R",
-  "/src/4-b-values-filtered.R",
-  "/src/5-b-values-merged.R",
-  "/src/6-pca.R",
-  "/src/7-pca-scores.R"
+  "1-b-values.R",
+  "2-b-values-clean.R",
+  "3-b-values-transposed.R",
+  "4-b-values-filtered.R",
+  "5-b-values-merged.R",
+  "6-pca.R",
+  "7-pca-scores.R"
 )
 
 # Run each step sequentially
