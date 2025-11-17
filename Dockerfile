@@ -1,24 +1,16 @@
-FROM ubuntu:latest AS install
-RUN apt-get update && apt-get install -y curl bzip2
-COPY environment.yml /tmp/environment.yml
-RUN curl -Ls https://micro.mamba.pm/install.sh | bash && \
-    export MAMBA_EXE='/root/.local/bin/micromamba' && \
-    export MAMBA_ROOT_PREFIX='/root/micromamba' && \
-    eval "$("$MAMBA_EXE" shell hook --shell posix)" && \
-    micromamba create -n r-env -f /tmp/environment.yml && \
-    micromamba clean --all --yes
-# RUN curl -Ls https://micro.mamba.pm/install.sh | bash && \
-#     source ~/.bashrc && \
-#     micromamba create -n r-env -f /tmp/environment.yml && \
-#     micromamba clean --all --yes
+FROM ubuntu:latest AS base
+ENV DEBIAN_FRONTEND noninteractive
+RUN apt-get update
+RUN apt-get install -y r-base r-base-dev
 
-# RUN micromamba create -n r-env -f /tmp/environment.yml && \
-#     micromamba clean --all --yes
-
-COPY ./src /src
+FROM base AS install
+COPY ./src/install /src
 WORKDIR /src
-COPY ./app /app
-WORKDIR /app
+
+RUN apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+
+RUN Rscript install.R
+RUN apt-get clean
 
 FROM install AS final
 COPY ./src/run /src
