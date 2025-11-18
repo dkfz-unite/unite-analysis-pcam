@@ -12,5 +12,10 @@ probe_variances <- apply(b_values_transposed, 2, var)
 # Keep only probes with non-zero variance
 b_values_filtered <- b_values_transposed[, probe_variances > 0]
 
+# Clean up
+rm(b_values_transposed)
+rm(probe_variances)
+gc()
+
 # Dump step data
 saveRDS(b_values_filtered, file = "step-4.rds")

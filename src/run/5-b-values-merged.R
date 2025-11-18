@@ -14,5 +14,10 @@ metadata$basename <- basename(metadata$path)
 indices <- match(rownames(b_values_filtered), metadata$basename)
 rownames(b_values_filtered) <- metadata$sample_id[indices]
 
-# Dump data
+# Clean up
+rm(metadata)
+rm(indices)
+gc()
+
+# Dump step data
 saveRDS(b_values_filtered, file = "step-5.rds")

@@ -9,5 +9,9 @@ file.remove("step-2.rds")
 # Transpose B-values so that rows = samples, columns = probes
 b_values_transposed <- t(b_values_clean)
 
+# Clean up
+rm(b_values_clean)
+gc()
+
 # Dump step data
 saveRDS(b_values_transposed, file = "step-3.rds")

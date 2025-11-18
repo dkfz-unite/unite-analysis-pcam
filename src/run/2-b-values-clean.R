@@ -9,5 +9,9 @@ file.remove("step-1.rds")
 # Clean B-values
 b_values_clean <- b_values[complete.cases(b_values), ]
 
+# Clean up
+rm(b_values)
+gc()
+
 # Dump step data
 saveRDS(b_values_clean, file = "step-2.rds")
