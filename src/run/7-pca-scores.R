@@ -12,3 +12,8 @@ pca_scores <- cbind(Sample = rownames(pca_scores), pca_scores)
 rownames(pca_scores) <- NULL
 
 write.table(pca_scores, outputFilePath, row.names = FALSE, quote = FALSE, sep = "\t")
+
+# Clean up
+rm(pca)
+rm(pca_scores)
+gc()
