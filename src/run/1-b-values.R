@@ -16,19 +16,24 @@ red_grn_set <- read.metharray(metadata$path, extended = TRUE, force = TRUE)
 # Preprocess IDATs based on specified method
 method = options$pp
 if (method == "SWAN") {
-    b_set <- preprocessSWAN(red_grn_set)
+  b_set <- preprocessSWAN(red_grn_set)
 } else if (method == "Quantile") {
-    b_set <- preprocessQuantile(red_grn_set)
+  b_set <- preprocessQuantile(red_grn_set)
 } else if (method == "Noob") {
-    b_set <- preprocessNoob(red_grn_set)
+  b_set <- preprocessNoob(red_grn_set)
 } else if (method == "Raw") {
-    b_set <- preprocessRaw(red_grn_set)
+  b_set <- preprocessRaw(red_grn_set)
 } else {
-    b_set <- preprocessIllumina(red_grn_set)
+  b_set <- preprocessIllumina(red_grn_set)
 }
 
 # Get B-values
 b_values <- getBeta(b_set)
 
-# Dump data
+# Clean up
+rm(red_grn_set)
+rm(b_set)
+gc()
+
+# Dump step data
 saveRDS(b_values, file = "step-1.rds")

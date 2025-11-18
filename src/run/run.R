@@ -12,5 +12,5 @@ steps <- list(
 
 # Run each step sequentially
 for (step in steps) {
-    system2("Rscript", args = c(step, args))
+  system2("Rscript", args = c(step, args))
 }
