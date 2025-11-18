@@ -20,7 +20,7 @@ pca <- irlba::prcomp_irlba(
 )
 
 # Remove rotation matrix to save space
-pca$rotation <- NULL
+# pca$rotation <- NULL
 
 # Clean up
 rm(b_values_filtered)
